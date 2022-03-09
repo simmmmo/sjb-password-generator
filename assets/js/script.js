@@ -19,11 +19,13 @@ if (characterLength == null) {
   } 
   else if (isNaN(characterLength)) {
   alert("Please enter a number");
-  generatePassword()  
+  generatePassword();
+  return;  
   } 
   else if ((characterLength < 8)||(characterLength > 168)) { 
-  alert("Your password length must be between 8 - 168 characters;")  
-  generatePassword()  
+  alert("Your password length must be between 8 - 168 characters;");
+  generatePassword();
+  return;  
 };
 
 var incLowerCase = window.confirm("Would you like to include lowercase characters in your password?");
@@ -67,8 +69,9 @@ if (incSpecialChar) {
 }; 
 
 if (!passStart) {
-    alert("You didn't select any options, please start again") ;
-    generatePassword();  
+    alert("You didn't select any options, please start again");
+    generatePassword();
+    return;  
 };
 
 var fillLength =  characterLength - passStart.length;
