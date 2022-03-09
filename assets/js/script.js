@@ -5,7 +5,7 @@ var lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
 var upperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',  'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specialChar = ['~', '!', '@', '#','$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '[', ']', '/', '{', '}', '|', ';', ':', '.', ';', '/', '<', '>', '?'];
-var passStart = [];
+var passStart = '';
 var passwordFinal = '';
 var mixedBag = [];
 
@@ -17,7 +17,7 @@ var characterLength = window.prompt("Enter length of password between 8 - 168 ch
 if (characterLength == null) {
   return; 
   } 
-  else if (!characterLength) {
+  else if (isNaN(characterLength)) {
   alert("Please enter a number");
   generatePassword()  
   } 
@@ -92,8 +92,6 @@ console.log(passwordFinal);
 return passwordFinal;
 
 }
-
-
 
 // Write password to the #password input
 function writePassword() {
