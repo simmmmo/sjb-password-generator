@@ -1,104 +1,100 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+
+// Arrays of types of available characters 
 var lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',  'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 var upperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',  'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specialChar = ['~', '!', '@', '#','$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '[', ']', '/', '{', '}', '|', ';', ':', '.', ';', '/', '<', '>', '?'];
-var passStart = '';
-var passwordFinal = '';
-var mixedBag = [];
+
 
 
 function generatePassword() {
+  var mixedBag = [];
+  var password = '';
+  var characterLength = '';
+  
+  characterLength = window.prompt("Enter length of password between 8 - 168 characters")
 
-var characterLength = window.prompt("Enter length of password between 8 - 168 characters")
+  if (characterLength == null) {
+    return; 
+    } 
+    else if (isNaN(characterLength)) {
+    alert("Please enter a number");
+    generatePassword();
+    return;  
+    } 
+    else if ((characterLength < 8)||(characterLength > 168)) { 
+    alert("Your password length must be between 8 - 168 characters;");
+    generatePassword();
+    return;  
+  };
 
-if (characterLength == null) {
-  return; 
-  } 
-  else if (isNaN(characterLength)) {
-  alert("Please enter a number");
-  generatePassword();
-  return;  
-  } 
-  else if ((characterLength < 8)||(characterLength > 168)) { 
-  alert("Your password length must be between 8 - 168 characters;");
-  generatePassword();
-  return;  
-};
+  console.log(characterLength);
 
-var incLowerCase = window.confirm("Would you like to include lowercase characters in your password?");
+  var incLowerCase = window.confirm("Would you like to include lowercase characters in your password?");
 
-if (incLowerCase) {
-  mixedBag = mixedBag.concat(lowerCase);
-  var lowerCaseLength = lowerCase.length;
-  var index = Math.floor(Math.random() * lowerCaseLength);
-  var singleLowerCase = lowerCase[index];
-  passStart = passStart.concat(singleLowerCase);
-};
+  if (incLowerCase) {
+    generateCharacter(lowerCase)
+  }
 
-var incUpperCase = window.confirm("Would you like to include uppercase characters in your password?");
+  var incUpperCase = window.confirm("Would you like to include uppercase characters in your password?");
 
-if (incUpperCase) {
-  mixedBag = mixedBag.concat(upperCase);
-  var upperCaseLength = upperCase.length;
-  var index = Math.floor(Math.random() * upperCaseLength);
-  var singleUpperCase = upperCase[index];
-  passStart = passStart.concat(singleUpperCase);
-};
+  if (incUpperCase) {
+    generateCharacter(upperCase)
+  }
 
-var incNumbers = window.confirm("Would you like to include numbers in your password?");
+  var incNumbers = window.confirm("Would you like to include numbers in your password?");
 
-if (incNumbers) {
-  mixedBag = mixedBag.concat(numbers);
-  var numbersLength = numbers.length;
-  var index = Math.floor(Math.random() * numbersLength);
-  var singlenumbers = numbers[index];
-  passStart = passStart.concat(singlenumbers);
-};
+  if (incNumbers) {
+    generateCharacter(numbers)
+  }
 
-var incSpecialChar = window.confirm("Would you like to include special characters in your password?");
+  var incSpecialChar = window.confirm("Would you like to include special characters in your password?");
 
-if (incSpecialChar) {
-  mixedBag = mixedBag.concat(specialChar);
-  var specialCharLength = specialChar.length;
-  var index = Math.floor(Math.random() * specialCharLength);
-  var singlespecialChar = specialChar[index];
-  passStart = passStart.concat(singleUpperCase);
-}; 
+  if (incSpecialChar) {
+    generateCharacter(specialChar)
+  }
 
-if (!passStart) {
+  //Fucntion to ensure that the password includes one of each selected character
+  function generateCharacter(type) {
+    //This adds the selected character array into a group array that the remain required characters for the password are randomly selected from
+    mixedBag = mixedBag.concat(type);
+    var arrayLength = type.length;
+    var index = Math.floor(Math.random() * arrayLength);
+    // Adds single random required character type to the password
+    password += type[index]
+  }
+  
+  // Validation if not character types are selected. Restarts the processes
+  if (!password) {
     alert("You didn't select any options, please start again");
     generatePassword();
     return;  
+  };
+  
+  //Variable is defined how many random characters are needed to fill the required password length  
+  var fillLength =  characterLength - password.length;
+
+  // Picks random characters from 
+  for (var i = 0; i < fillLength; i++) {
+    password += mixedBag[Math.floor(Math.random() * mixedBag.length)];
+  };
+
+  
+  console.log(mixedBag);
+  console.log(characterLength);
+  console.log(incLowerCase);
+  console.log(incUpperCase);
+  console.log(incNumbers);
+  console.log(incSpecialChar);
+  console.log(password);
+  console.log(password.value);
+
+  return password;
+
 };
-
-var fillLength =  characterLength - passStart.length;
-var passFill = '';
-
-
-for (var i = 0; i < fillLength; i++) {
-  passFill += mixedBag[Math.floor(Math.random() * mixedBag.length)];
-};
-
-passwordFinal = passStart + passFill;
-
-console.log(mixedBag);
-console.log(characterLength);
-console.log(singleLowerCase);
-console.log(singleUpperCase);
-console.log(singlenumbers);
-console.log(singlespecialChar);
-console.log(passStart);
-console.log(passFill);
-console.log(passwordFinal);
-
-return passwordFinal;
-
-}
-
-
 
 
 // Write password to the #password input
@@ -107,7 +103,9 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
+  console.log(password);
+  console.log(passwordText);
+  console.log(passwordText.value);
 }
 
 // Add event listener to generate button
