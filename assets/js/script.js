@@ -35,7 +35,7 @@ if (incLowerCase) {
   var lowerCaseLength = lowerCase.length;
   var index = Math.floor(Math.random() * lowerCaseLength);
   var singleLowerCase = lowerCase[index];
-  passStart = passStart + singleLowerCase;
+  passStart = passStart.concat(singleLowerCase);
 };
 
 var incUpperCase = window.confirm("Would you like to include uppercase characters in your password?");
@@ -45,7 +45,7 @@ if (incUpperCase) {
   var upperCaseLength = upperCase.length;
   var index = Math.floor(Math.random() * upperCaseLength);
   var singleUpperCase = upperCase[index];
-  passStart = passStart + singleUpperCase;
+  passStart = passStart.concat(singleUpperCase);
 };
 
 var incNumbers = window.confirm("Would you like to include numbers in your password?");
@@ -55,7 +55,7 @@ if (incNumbers) {
   var numbersLength = numbers.length;
   var index = Math.floor(Math.random() * numbersLength);
   var singlenumbers = numbers[index];
-  passStart = passStart + singlenumbers;
+  passStart = passStart.concat(singlenumbers);
 };
 
 var incSpecialChar = window.confirm("Would you like to include special characters in your password?");
@@ -65,7 +65,7 @@ if (incSpecialChar) {
   var specialCharLength = specialChar.length;
   var index = Math.floor(Math.random() * specialCharLength);
   var singlespecialChar = specialChar[index];
-  passStart = passStart + singlespecialChar;
+  passStart = passStart.concat(singleUpperCase);
 }; 
 
 if (!passStart) {
@@ -77,11 +77,12 @@ if (!passStart) {
 var fillLength =  characterLength - passStart.length;
 var passFill = '';
 
+
 for (var i = 0; i < fillLength; i++) {
   passFill += mixedBag[Math.floor(Math.random() * mixedBag.length)];
 };
 
-var passwordFinal = passStart + passFill;
+passwordFinal = passStart + passFill;
 
 console.log(mixedBag);
 console.log(characterLength);
@@ -89,12 +90,16 @@ console.log(singleLowerCase);
 console.log(singleUpperCase);
 console.log(singlenumbers);
 console.log(singlespecialChar);
+console.log(passStart);
 console.log(passFill);
 console.log(passwordFinal);
 
 return passwordFinal;
 
 }
+
+
+
 
 // Write password to the #password input
 function writePassword() {
