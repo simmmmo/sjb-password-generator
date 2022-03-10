@@ -9,30 +9,25 @@ var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specialChar = ['~', '!', '@', '#','$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '[', ']', '/', '{', '}', '|', ';', ':', '.', ';', '/', '<', '>', '?'];
 
 
-
 function generatePassword() {
+  // mixedbag variable a merging of the user required character arrays
   var mixedBag = [];
   var password = '';
-  var characterLength = '';
   
-  characterLength = window.prompt("Enter length of password between 8 - 168 characters")
-
+  var characterLength = window.prompt("Enter length of password between 8 - 168 characters")
+  // Validation for input of character length
   if (characterLength == null) {
-    return; 
-    } 
-    else if (isNaN(characterLength)) {
+    return null; 
+  } else if (isNaN(characterLength)) {
     alert("Please enter a number");
-    generatePassword();
-    return;  
-    } 
-    else if ((characterLength < 8)||(characterLength > 168)) { 
+    return null;  
+  } else if ((characterLength < 8)||(characterLength > 168)) { 
     alert("Your password length must be between 8 - 168 characters;");
-    generatePassword();
-    return;  
+    return null;  
   };
 
   console.log(characterLength);
-
+  //Include chartecter type prompts
   var incLowerCase = window.confirm("Would you like to include lowercase characters in your password?");
 
   if (incLowerCase) {
@@ -59,38 +54,27 @@ function generatePassword() {
 
   //Fucntion to ensure that the password includes one of each selected character
   function generateCharacter(type) {
-    //This adds the selected character array into a group array that the remain required characters for the password are randomly selected from
+    //This adds the character array into group array for the required characters for the password are randomly selected from
     mixedBag = mixedBag.concat(type);
+    // Adds single random required character type to the password string
     var arrayLength = type.length;
     var index = Math.floor(Math.random() * arrayLength);
-    // Adds single random required character type to the password
     password += type[index]
   }
   
-  // Validation if not character types are selected. Restarts the processes
+  // Validates that at least one character type is selected
   if (!password) {
     alert("You didn't select any options, please start again");
-    generatePassword();
-    return;  
+    return null;  
   };
   
-  //Variable is defined how many random characters are needed to fill the required password length  
+  //Works out how many remaining characters are needed to fill the required password length  
   var fillLength =  characterLength - password.length;
 
-  // Picks random characters from 
+  //Picks remaining required characters at random  
   for (var i = 0; i < fillLength; i++) {
     password += mixedBag[Math.floor(Math.random() * mixedBag.length)];
   };
-
-  
-  console.log(mixedBag);
-  console.log(characterLength);
-  console.log(incLowerCase);
-  console.log(incUpperCase);
-  console.log(incNumbers);
-  console.log(incSpecialChar);
-  console.log(password);
-  console.log(password.value);
 
   return password;
 
@@ -100,13 +84,14 @@ function generatePassword() {
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
+  //Validation fix added to stop returning undefined
+  if (password === null) {
+    writePassword()
+    return
+  }
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-  console.log(password);
-  console.log(passwordText);
-  console.log(passwordText.value);
-}
+ }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
